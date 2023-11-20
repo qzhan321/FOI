@@ -1,1 +1,1 @@
-code for generating the simulation output.
+Folder contains code and running scrirpts for generating the simulation output.
