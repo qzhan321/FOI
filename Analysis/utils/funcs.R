@@ -3,6 +3,7 @@ generateMOI <- function(p_missing = NA, ps = NA, N = NA, N_neg = NA, MOI_max = 2
   # ps: the probability density function of non-zero MOIs
   # N: the total number of individual sampled within a certain age group
   # N_neg: the total number of individual sampled within a certain age group that are PCR negative
+  # N_pos_microscopy: the number of inividuals with their var genes sequenced and typed, and MOI estimated
   # replacement: whether sample with or without replacement from the empirical MOI distribution
   m <- round(N_neg * (1 - p_missing)) # number of true PCR negatives
   n <- N - m - N_pos_microscopy # number of individuals with missing MOI
