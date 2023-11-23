@@ -24,8 +24,6 @@ generateMOI <- function(p_missing = NA, ps = NA, N = NA, N_neg = NA, MOI_max = 2
   for (j in 1:m) {
     ps_for_MOIZero <- rbind(ps_for_MOIZero, temp %>% mutate(host_id = paste0("MOI_zero_ind", j, "_", unique(ps$survey))))
   }
-  # MOI_true_zeros <- rep(0, m)
-  # MOI_false_zeros <- sample(MOI, n, replace = replacement)
-  # MOI_all <- c(MOI_true_zeros, MOI_false_zeros, MOI)
+  
   return(list("true_MOI_zeros" = ps_for_MOIZero, "false_MOI_zeros" = ps_for_missingMOI))
 }
