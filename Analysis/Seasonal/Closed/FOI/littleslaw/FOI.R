@@ -1,6 +1,6 @@
 rm(list = ls())
 c <- 20
-r <- 20
+r <- 0
 run <- 5
 readDir <- paste0("/project2/pascualmm/QZ/PhD/projects/FOI/files", run, "/actualRuns/FOI/", "twoMoments", "/")
 seasonality <- "seasonal"
