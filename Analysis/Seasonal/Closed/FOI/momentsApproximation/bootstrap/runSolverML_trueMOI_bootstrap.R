@@ -19,7 +19,7 @@ if(length(args)==0){
 }
 
 c <- 20
-r <- 20
+r <- 0
 
 source("/home/qizhan/others/PhD/projects/FOI/utils/solver.R")
 preIRS <- 200
