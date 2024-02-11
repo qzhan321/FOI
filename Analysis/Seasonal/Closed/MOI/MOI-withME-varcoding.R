@@ -109,8 +109,13 @@ for (i in 1:length(nums)) {
       
       set.seed(1)
       names_supp_temp <- sample(names, length(microscopyNegHosts), replace = T)
-      df_supp_temp <- lapply(names_supp_temp, function(x){df_sub %>% filter(host_id == x)}) %>% bind_rows() 
-      df_supp <- rbind(df_supp, df_supp_temp)
+      # names_supp_temp_df <- data.frame("host_id" = names_supp_temp, "true_host_id" = microscopyNegHosts)
+      df_supp_temp <- lapply(names_supp_temp, function(x){df_sub %>% filter(host_id == x)}) 
+      df_supp_temp <- do.call(rbind, df_supp_temp)
+      if (!is.null(df_supp_temp)) {
+        # df_supp_temp <- df_supp_temp %>% left_join(names_supp_temp_df, by = "host_id") %>% select(-host_id) %>% mutate(host_id = true_host_id) %>% select(-true_host_id) 
+        df_supp <- bind_rows(df_supp, df_supp_temp)
+      }
     }
     
     # zeros
@@ -123,14 +128,15 @@ for (i in 1:length(nums)) {
       t <- layers[m]
       all_sampled_hosts_sub <- all_sampled_hosts %>% filter(age <= ageCutoff, time == t)
       df_sub <- df %>% filter(time == t)
-      if (nrow(df_supp) > 0) {
-        df_supp_temp <- df_supp %>% filter(time == t)
-      } else {
-        df_supp_temp <- NULL
-      }
+      # if (!is.null(df_supp)) {
+      #   df_supp_temp <- df_supp %>% filter(time == t)
+      # } else {
+      #   df_supp_temp <- NULL
+      # }
+      load(file = paste0(negHostsSaveDir4, "rep_", r, "_time_", t, "_", ageGroupLabel, ".RData"))
       stopifnot(unique(df_sub$host_id) %in% unique(all_sampled_hosts_sub$host_id))
-      stopifnot(unique(df_supp_temp$host_id) %in% unique(all_sampled_hosts_sub$host_id))
-      hostIDs <- setdiff(unique(all_sampled_hosts_sub$host_id), union(unique(df_sub$host_id), unique(df_supp_temp$host_id)))
+      stopifnot(unique(microscopyNegHosts) %in% unique(all_sampled_hosts_sub$host_id))
+      hostIDs <- setdiff(unique(all_sampled_hosts_sub$host_id), union(unique(df_sub$host_id), unique(microscopyNegHosts)))
       all_sampled_hosts_sub_sub <- all_sampled_hosts_sub %>% filter(host_id %in% hostIDs)
       df_zeros_sub <- all_sampled_hosts_sub_sub %>% select(time, host_id, age, pop_id) 
       
