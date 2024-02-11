@@ -76,7 +76,7 @@ T_YEAR <- 360
 layers <- sort(c(c(preIRS - 1, preIRS + 1)*T_YEAR  + 300,
                  c(preIRS - 1, preIRS + 1)*T_YEAR  + 180))
 
-p_microscopy <- 0.72 # conversion factor between PCR and miscroscopy for 1-5 year old children
+p_microscopy <- 1.0 # conversion factor between PCR and miscroscopy for 1-5 year old children
 ageCutoff <- 5
 ageGroupLabel <- "0-5yrs"
 nums_w_reps <- NULL
@@ -162,7 +162,7 @@ for (i in 1:length(nums)) {
       
       set.seed(1)
       names_supp_temp <- sample(names, length(microscopyNegHosts), replace = T)
-      names_supp_temp_df <- data.frame("host_id" = names_supp_temp, "true_host_id" = microscopyNegHosts)
+      # names_supp_temp_df <- data.frame("host_id" = names_supp_temp, "true_host_id" = microscopyNegHosts)
       df_supp_temp <- lapply(names_supp_temp, function(x){df_sub %>% filter(host_id == x)}) 
       df_supp_temp <- do.call(rbind, df_supp_temp)
       if (!is.null(df_supp_temp)) {
