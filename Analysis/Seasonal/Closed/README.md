@@ -1,1 +1,0 @@
-Scripts for seasonal and closed systems. For other combinations of transmission (constant or seasonal) and spatial configurations, or heterogeneous transmission, their analysis scripts are similar to these.
