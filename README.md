@@ -68,7 +68,7 @@ Rscript FOIest.R -i "/Users/John/Downloads/survey_1_MOI.csv" -c 30 -b TRUE -s 1 
 
 
 #### Efficiency
-Running bootstrap analysis to derive the confidence intervals of the estimated FOI values can take time. Users should run replicates in parallel. 200 replicates has been tested and proven to approach a similar coefficient of variation than a higher number of replicates. For example, let's assume we run 200 replicates. Users can embed the above command line to a bash script and run it on a computational cluster. One can request a node for the first 10 replicates, and a second node for the second 10 replicates, and so on.
+Running bootstrap analysis to derive the confidence intervals of the estimated FOI values can take time. Users should run replicates in parallel. 200 replicates has been tested and proven to approach a similar coefficient of variation than a higher number of replicates. For example, let's assume we run 200 replicates. Users can embed the above command line to a bash script and run it on a computational cluster. One can submit a first job and request a node for the first 10 replicates, a second job and a second node for the second 10 replicates, and so on. By running these 10 jobs in parallel, one reduces the amount of running time.
 ##### file1.sh
 ```bash
 #SBATCH --array=1
