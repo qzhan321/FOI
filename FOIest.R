@@ -11,8 +11,6 @@ suppressPackageStartupMessages({
 option_list <- list(
   make_option(c("-i", "--inputFile"), type = "character", default = NULL,
               help = "the path and the name of the input file containing MOI information"),
-  # make_option(c("-y", "--MOIImputation"), type = "logical", default = FALSE,
-  #             help = "whether imputing MOI values for individuals with missing MOI information due to the low detection power of the selected detection method"),
   make_option(c("-c", "--bloodStageCarryingCapacity"), type = "integer", default = 30,
               help = "the carrying capacity for blood-stage infections"),
   make_option(c("-b", "--bootstrap"), type = "logical", default = TRUE,
@@ -39,22 +37,6 @@ T_YEAR = 365
 MOIInfo <- read.csv(opt$inputFile, header = T)
 
 source("./utils/funcs.R")
-
-# if (opt$MOIImputation) {
-#   message("Performing MOI imputation for individuals with missing MOI information due to the detection power of the selected detection method: sampling from individuals with MOI information available!")
-#   if (!("n_moi_total" %in% colnames(MOIInfo)))
-#     stop("Error: The total number of individuals with MOI information available is not providded in the input file containing MOI information!")
-#   if (!("detection_power" %in% colnames(MOIInfo))) 
-#     stop("Error: The detection power of the selected detection method is not provided in the input file containing MOI information!")
-#   MOIsPresent = rep(MOIInfo$MOI, round(MOIInfo$n_moi_total*MOIInfo$Prob))
-#   MOIsMissing = sample(MOIsPresent, size = round(MOIInfo$n_moi_total/MOIInfo$detection_power - MOIInfo$n_moi_total), replace = T)
-#   MOIs = c(MOIsPresent, MOIsMissing)
-# } else {
-#   message("No MOI imputation is performed!")
-#   if (!("n_moi_total" %in% colnames(MOIInfo)))
-#     stop("Error: The total number of individuals with MOI information available is not providded in the input file containing MOI information!")
-#   MOIs = rep(MOIInfo$MOI, round(MOIInfo$n_moi_total*MOIInfo$Prob))
-# }
 
 if ("Prob" %in% colnames(MOIInfo)) {
   MOIs = rep(MOIInfo$MOI, round(MOIInfo$n_moi_total*MOIInfo$Prob))
