@@ -8,7 +8,7 @@
     - [Command](#Command)
     - [Example Command](#Example-Command)
     - [Command Arguments](#Command-Arguments)
-    - [Large Dataset](#Large-Dataset)
+    - [Efficiency](#Efficiency)
     - [Help](#Help)
 - [Contact](#Contact)
 
@@ -24,7 +24,7 @@ The script **[FOIest.R](https://github.com/qzhan321/FOI/blob/FOIEst/FOIest.R)** 
 #### The under-sampling of infections issue
 The empirical MOI estimates in many epidemiological studies, rely on individuals who are microscopy-positive. Given the sensitivity of microscopy, a significant fraction of individuals who carry infections are not detected. In other cases, MOI estimates are obtained for individuals who are PCR-positive. PCR is considerably more sensitive than microscopy, detecting a higher fraction, if not 100%, of individuals with *P. falciparum* infections. However, a small fraction of individuals who are infected but whose infections are not detected, i.e., MOI = 0. 
 
-**FOIest.R** requires a .csv file which contains MOI information of the sampled population as the input. The input dataframe has two columns. The first column has MOI values of all sampled individual hosts, ranging from 0, 1, ..., up to some carrying capacity of blood-stage infection. The second column has the corresponding number or proportion/probability of sampled individuals with any specific MOI value. Examples of the inputs are given in the following paragraph. 
+**FOIest.R** requires a .csv file which contains MOI information of the sampled population as the input. The input dataframe has either two or three columns. The first column has MOI values of all sampled individual hosts, ranging from 0, 1, ..., up to some carrying capacity of blood-stage infection. The second column has the corresponding number or proportion/probability of sampled individuals with any specific MOI value. For the latter, a third column is needed which records the total number of individuals in the sampled population. Examples of the inputs are given in the following paragraph. 
 
 When applying our methods, users should address the under-sampling of infections in estimates of MOI in empirical surveys. Users can impute MOI values for individuals who are infected but whose infections are not detected by the sequencing and typing procedure, i.e., their MOI values are falsely assigned to be 0. One straightforward way for this imputation is to sample from MOI values of those individuals with their infections detected. Consider the following toy example. Let's assume we sample 10 individuals in a population. We use microscopy to detect how many of the 10 individuals are positively infected, which is 4. We then sequence and type *var* genes from these 4 indidividuals, and estimate their MOI values to be 1,2,3,4 respectively. If we have information about the detection power of microscopy, i.e., the probability of a positively infected individuals being detected by microscopy as positive, we can calculate the number of individuals among the rest 6 ones who are positively infected but whose infections are not detected and whose MOI values are falsely assigned to be 0. Assuming the detection power to be 0.8, then one individual among the remaining 6 is actually positively infected. We can sample a MOI value from the aforementioned four individuals whose MOI values are 1,2,3,4 respectively, to be the MOI value of this individual with missing MOI information. Let's say 3. The MOI information for these 10 indivduals are: 
 
@@ -36,22 +36,22 @@ When applying our methods, users should address the under-sampling of infections
 | `3` | 2 |
 | `4` | 1 |
 
-| MOI | Prob |
-| :--: | :--: | 
-| `0` | 0.5 |
-| `1` | 0.1 |
-| `2` | 0.1 |
-| `3` | 0.2 |
-| `4` | 0.1 |
+| MOI | Prob | N |
+| :--: | :--: | :--: | 
+| `0` | 0.5 | 10 |
+| `1` | 0.1 | 10 |
+| `2` | 0.1 | 10 |
+| `3` | 0.2 | 10 |
+| `4` | 0.1 | 10 |
 
 #### Command
 ```bash
-Rscript FOIest.R -i "path/to/directory/inputFile" -c 30 -b TRUE -r 200 -m "TwoMomentApproximation" -p "high" -o "/path/to/directory/outFile"
+Rscript FOIest.R -i "path/to/directory/inputFile" -c 30 -b TRUE -s 1 -e 10 -m "TwoMomentApproximation" -p "high" -o "/path/to/directory/outFile"
 ```
 
 #### Example Command 
 ```bash
-Rscript FOIest.R -i "/Users/John/Downloads/survey_1_MOI.csv" -c 30 -b TRUE -r 200 -m "TwoMomentApproximation" -p "high" -o "/Users/John/Downloads/survey_1_FOI.RData" 
+Rscript FOIest.R -i "/Users/John/Downloads/survey_1_MOI.csv" -c 30 -b TRUE -s 1 -e 10 -m "TwoMomentApproximation" -p "high" -o "/Users/John/Downloads/survey_1_FOI.RData" 
 ```
 
 #### Command Arguments
@@ -59,15 +59,42 @@ Rscript FOIest.R -i "/Users/John/Downloads/survey_1_MOI.csv" -c 30 -b TRUE -r 20
 |  :-:  | :---------: | 
 |  `i`  | inputFile. The full path and name of the input file containing MOI information. It is in .csv file format with two columns: MOI values "MOI", and the number of individuals, or the proportion of individuals with specific MOI values "Count" or "Prob". |
 |  `c`  | bloodStageCarryingCapacity. The carrying capacity for blood-stage infections, i.e., the maximum value for blood-stage MOI. |
-|  `b`  | bootstrap. Whether running bootstrap analysis for FOI estimation or not to generate confidence intervals for the estimated FOI values. |
-|  `r`  | replicateBootstrap. When running bootstrap analysis, specifying the number of replicates performed. |
+|  `b`  | bootstrap. Whether running bootstrap analysis for FOI estimation or not to generate confidence intervals for the estimated FOI values. When FALSE, estimate FOI values based on the original MOI information. When TRUE, sample with replacement from the original MOI information, and then perform FOI estimation; repeat with many replicates to derive the confidence intervals of the estimated FOI values. |
+|  `s`  | replicateStartIndexBootstrap. When running bootstrap analysis, specifying the start index of the replicates performed. |
+|  `e`  | replicateEndIndexBootstrap. When running bootstrap analysis, specifying the end index of the replicates performed. |
 |  `m`  | method. Which method for FOI estimation; either "TwoMomentApproximation" or "LittlesLaw". |
 |  p`  | paramRange. Four options: "verylow", "low", "medium", "high". This parameter specifies users' belief on the transmission intensity or force of infection of the sampled population, which can help narrow down the parameter space searched for FOI estimation. |
 |  `o`   | The full path to the directory where the output will be saved and the name of the output file. For example, "FOI.RData". |
 
 
-#### Large Dataset
-You may embed the command line to a bash script and run it on a computational cluster. That way you can request a number of nodes and memory per node for enough computational power.
+#### Efficiency
+Running bootstrap analysis to derive the confidence intervals of the estimated FOI values can take time. Users should run replicates in parallel. 200 replicates has been tested and proven to approach a similar coefficient of variation than a higher number of replicates. For example, let's assume we run 200 replicates. Users can embed the above command line to a bash script and run it on a computational cluster. One can request a node for the first 10 replicates, and a second node for the second 10 replicates, and so on.
+##### file1.sh
+```bash
+#SBATCH --array=1
+#SBATCH --tasks=1
+#SBATCH --cpus-per-task=1
+#SBATCH --mem-per-cpu=2000
+Rscript FOIest.R -i "path/to/directory/inputFile" -c 30 -b TRUE -s 1 -e 10 -m "TwoMomentApproximation" -p "high" -o "/path/to/directory/outFile"
+```
+##### file2.sh
+```bash
+#SBATCH --array=1
+#SBATCH --tasks=1
+#SBATCH --cpus-per-task=1
+#SBATCH --mem-per-cpu=2000
+Rscript FOIest.R -i "path/to/directory/inputFile" -c 30 -b TRUE -s 11 -e 20 -m "TwoMomentApproximation" -p "high" -o "/path/to/directory/outFile"
+```
+......
+##### file20.sh
+```bash
+#SBATCH --array=1
+#SBATCH --tasks=1
+#SBATCH --cpus-per-task=1
+#SBATCH --mem-per-cpu=2000
+Rscript FOIest.R -i "path/to/directory/inputFile" -c 30 -b TRUE -s 191 -e 200 -m "TwoMomentApproximation" -p "high" -o "/path/to/directory/outFile"
+```
+
 
 #### Help
 Run the command below to print out help page.
