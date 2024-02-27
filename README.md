@@ -8,7 +8,7 @@
     - [Command](#Command)
     - [Example Command](#Example-Command)
     - [Command Arguments](#Command-Arguments)
-    - [Output](#Output)
+    - [Large Dataset](#Large-Dataset)
     - [Help](#Help)
 - [Contact](#Contact)
 
