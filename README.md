@@ -4,11 +4,11 @@
 - [Overview](#Overview)
 - [Applying the Two Methods to New Datasets of MOI Information](#Applying-the-Bayesian-Formulation-of-MOI-Estimation-to-New-Datasets)
  - [Running the Script](#Running-the-Script)
-   - [Command](#Command)
-   - [Example Command](#Example-Command)
-   - [Command Arguments](#Command-Arguments)
-   - [Output](#Output)
-   - [Help](#Help)
+  - [Command](#Command)
+  - [Example Command](#Example-Command)
+  - [Command Arguments](#Command-Arguments)
+  - [Output](#Output)
+  - [Help](#Help)
 - [Contact](#Contact)
 
 ## Overview
