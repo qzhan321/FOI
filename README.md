@@ -13,13 +13,13 @@
 - [Contact](#Contact)
 
 ## Overview
-This branch contains cleaned versions of code to facilitate the application of two methods for FOI estimation: the Two-Moment Approximation and Little's Law. More details regarding the two methods can be found in [Zhan et al., medRxiv, 2024.](https://doi.org/10.1101/2024.02.12.24302148). 
+This branch contains cleaned versions of code to facilitate the application of two methods for FOI estimation: the Two-Moment Approximation and Little's Law. More details regarding the two methods can be found in [Zhan et al., medRxiv, 2024.](https://doi.org/10.1101/2024.02.12.24302148) 
 
 ## Applying the Two Methods to New Datasets of MOI Information
 The script **[FOIest.R](https://github.com/qzhan321/FOI/blob/FOIEst/FOIest.R)** is needed. 
 
 ### Running the Script
-**FOIest.R** estimates FOI values based on MOI values. We illustrate the application of the methods with MOI estimates obtained via a recently published approach known as “*var*coding” and based on molecular data from the multigene family *var* which encodes the major variant surface antigen during the blood stage of infection [Tiedje and Zhan et al., *eLife*, 2023.](https://doi.org/10.7554/eLife.91411.1). But the methods can be applied to MOI estimates obtained in different ways, not necessarily the one adopted here.
+**FOIest.R** estimates FOI values based on MOI values. We illustrate the application of the methods with MOI estimates obtained via a recently published approach known as “*var*coding” and based on molecular data from the multigene family *var* which encodes the major variant surface antigen during the blood stage of infection [Tiedje and Zhan et al., *eLife*, 2023.](https://doi.org/10.7554/eLife.91411.1) But the methods can be applied to MOI estimates obtained in different ways, not necessarily the one adopted here.
 
 #### The under-sampling of infections issue
 The empirical MOI estimates in many epidemiological studies, rely on individuals who are microscopy-positive. Given the sensitivity of microscopy, a significant fraction of individuals who carry infections are not detected. In other cases, MOI estimates are obtained for individuals who are PCR-positive. PCR is considerably more sensitive than microscopy, detecting a higher fraction, if not 100%, of individuals with *P. falciparum* infections. However, a small fraction of individuals who are infected but whose infections are not detected, i.e., MOI = 0. 
