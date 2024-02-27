@@ -14,4 +14,13 @@
 ## Overview
 This branch contains cleaned versions of code to facilitate the application of two methods for FOI estimation: the Two-Moment Approximation and Little's Law. More details regarding the two methods can be found in [Zhan et al., medRxiv, 2024.](https://doi.org/10.1101/2024.02.12.24302148). 
 
+## Applying the Two Methods to New Datasets of MOI Information
+The script **[FOIest.R](https://github.com/qzhan321/FOI/blob/FOIEst/FOIest.R)** is needed. 
+
+### Running the Script
+**FOIest.R** estimates FOI values based on MOI values. It requires a .csv file which contains MOI information of the sampled population. We illustrate the application of the methods with MOI estimates obtained via a recently published approach known as “varcoding” and based on molecular data from the multigene family var which encodes the major variant surface antigen during the blood stage of infection [Tiedje and Zhan et al., *eLife*, 2023.](https://doi.org/10.7554/eLife.91411.1). But the methods can be applied to MOI estimates obtained in different ways, not necessarily the one adopted here.
+
+The associated dataframe has several columns, with the first one being host IDs, or any type of identifiers of hosts, and the second column being the number of **non-upsA** DBLα types sequenced and typed in each individual corresponding host. Below is an example of the first two rows of an input matrix:
+
+
 
