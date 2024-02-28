@@ -32,11 +32,11 @@ Consider the following toy example. Let's assume we sample 10 individuals in a p
 
 | MOI | Count |
 | :--: | :--: | 
-| `0` | 5 (originally 6, but need to minus 1, i.e., the individual whose infections are undetected and have 0 falsely assigned to be its MOI value) |
-| `1` | 1 |
-| `2` | 1 |
-| `3` | 2 (one detected, one imputed) |
-| `4` | 1 |
+| `0` | **5** (originally 6, but need to minus 1, i.e., the individual whose infections are undetected and have 0 falsely assigned to be its MOI value) |
+| `1` | **1** |
+| `2` | **1** |
+| `3` | **2** (one detected, one imputed) |
+| `4` | **1** |
 
 | MOI | Prob | N |
 | :--: | :--: | :--: | 
