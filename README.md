@@ -101,7 +101,7 @@ When set the method `m` to be "TwoMomentApproximation" without boostrap analysis
 | 645.4794 | 72 | 76000 | 5.069444 |
 
 When set the method `m` to be "TwoMomentApproximation" with 5 replicates for boostrap analysis:
-| negLogLikelihood | meanInterarrival" | VarInterArrival | rep | FOI |
+| negLogLikelihood | meanInterarrival | VarInterArrival | rep | FOI |
 | :--: | :--: | :--: | :--: | :--: |  
 | 630.3208 | 78 | 82000 | **1** | 4.679487 |
 | 630.3210 | 78 | 81500 | **1** | 4.679487 |
