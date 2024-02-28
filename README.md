@@ -59,9 +59,9 @@ Rscript FOIest.R -i "/Users/John/Downloads/survey_1_MOI.csv" -c 30 -b TRUE -s 1 
 #### Command Arguments
 |  Name | Description |
 |  :-:  | :---------: | 
-|  `i`  | inputFile. The full path and name of the input file containing MOI information. It is in .csv file format with two columns: MOI values "MOI", and the number of individuals, or the proportion of individuals with specific MOI values "Count" or "Prob". |
-|  `c`  | bloodStageCarryingCapacity. The carrying capacity for blood-stage infections, i.e., the maximum value for blood-stage MOI. |
-|  `b`  | bootstrap. Whether running bootstrap analysis for FOI estimation or not to generate confidence intervals for the estimated FOI values. When FALSE, estimate FOI values based on the original MOI information. When TRUE, sample with replacement from the original MOI information, and then perform FOI estimation; repeat with many replicates to derive the confidence intervals of the estimated FOI values. |
+|  `i`  | inputFile. The full path and name of the input file containing MOI information. It is in .csv file format with two or three columns: MOI values ("MOI"), the number of individuals or the proportion of individuals with specific MOI values ("Count" or "Prob"), and the total number of sampled individuals (only applicable if the second column cotains the proportion information) ("N"). |
+|  `c`  | bloodStageCarryingCapacity. The carrying capacity of blood-stage infections, i.e., the maximum possible value for blood-stage MOI. |
+|  `b`  | bootstrap. Whether running bootstrap analysis for FOI estimation or not. Bootstrap analysis generates confidence intervals for the estimated FOI values. When set to be FALSE, estimation of FOI values is based on the original MOI information. When set to be TRUE, the program first samples with replacement from the original MOI information, and then performs FOI estimation, which will repeat as many times as users specify in the following two parameters (`s` and `e`). |
 |  `s`  | replicateStartIndexBootstrap. When running bootstrap analysis, specifying the start index of the replicates performed. |
 |  `e`  | replicateEndIndexBootstrap. When running bootstrap analysis, specifying the end index of the replicates performed. |
 |  `m`  | method. Which method for FOI estimation; either "TwoMomentApproximation" or "LittlesLaw". |
