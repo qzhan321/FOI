@@ -32,19 +32,19 @@ Consider the following toy example. Let's assume we sample 10 individuals in a p
 
 | MOI | Count |
 | :--: | :--: | 
-| `0` | 5 |
-| `1` | 1 |
-| `2` | 1 |
-| `3` | 2 |
-| `4` | 1 |
+| 0 | 5 |
+| 1 | 1 |
+| 2 | 1 |
+| 3 | 2 |
+| 4 | 1 |
 
 | MOI | Prob | N |
 | :--: | :--: | :--: | 
-| `0` | 0.5 | 10 |
-| `1` | 0.1 | 10 |
-| `2` | 0.1 | 10 |
-| `3` | 0.2 | 10 |
-| `4` | 0.1 | 10 |
+| 0 | 0.5 | 10 |
+| 1 | 0.1 | 10 |
+| 2 | 0.1 | 10 |
+| 3 | 0.2 | 10 |
+| 4 | 0.1 | 10 |
 
 #### Command
 ```bash
@@ -66,11 +66,68 @@ Rscript FOIest.R -i "/Users/John/Downloads/survey_1_MOI.csv" -c 30 -b TRUE -s 1 
 |  `e`  | replicateEndIndexBootstrap. When running bootstrap analysis, specifying the end index of the replicates performed. For example, when performing 200 replicates, to speed things up, users can divide the 200 replicates into 20 jobs, i.e., 10 replicates per job, and then run these jobs in parallel. For the first job, the `s` is 1 and `e` is 10, and for the second job, the `s` is 11 and `e` is 20, and so on. More details are included in the following [section](#Efficiency). |
 |  `m`  | method. Which method for FOI estimation; either "TwoMomentApproximation" or "LittlesLaw". |
 |  p`  | paramRange. Four options: "verylow", "low", "medium", "high". This parameter specifies users' belief on the transmission intensity or force of infection of the sampled population. It can be some rough range: "high" corresponds to annual mean FOI per individual host > 4; "medium" corresponds to annual mean FOI per individual host within [2,4]; "low" corresponds to annual mean FOI per individdual host within [1,2]; "verylow" corresponds to annual mean FOI per individual host <1. This parameter can help define the parameter space searched when estimating FOI values. |
-|  `o`   | The full path to the directory where the output will be saved and the name of the output file. For example, "FOI.RData". |
+|  `o`  | The full path to the directory where the output will be saved and the name of the output file. For example, "FOI.RData". |
 
+
+#### Output
+The above example command will output a matrix containing FOI information. 
+
+When set the method `m` to be "LittlesLaw" without boostrap analysis:
+| FOI | 
+| :--: 
+| 4.878125 | 
+
+When set the method `m` to be "LittlesLaw" with 5 replicates for boostrap analysis:
+| FOI | rep |
+| :--: | :--: | 
+| 4.553247 | 1 |
+| 4.868205 | 2 |
+| 5.230282 | 3 |
+| 4.992204 | 4 |
+| 4.781406 | 5 |
+
+When set the method `m` to be "TwoMomentApproximation" without boostrap analysis, the program returns the top 10 FOI estimates which minimize the negative log likelihood of observing the empirical MOI distribution. Users can use the top FOI estimate, or the average of top 3 estimates, to be the final estimated FOI values. 
+| negLogLikelihood | meanInterarrival" | VarInterArrival | FOI |
+| :--: | :--: | :--: | :--: | 
+| 645.4679 | 72 | 77500 | 5.069444 |
+| 645.4686 | 72 | 77000 | 5.069444 |
+| 645.4703 | 72 | 78000 | 5.069444 |
+| 645.4724 | 72 | 76500 | 5.069444 |
+| 645.4731 | 73 | 78500 | 5 |
+| 645.4736 | 73 | 78000 | 5 |
+| 645.4756 | 73 | 79000 | 5 |
+| 645.4758 | 72 | 78500 | 5.069444 |
+| 645.4773 | 73 | 77500 | 5 |
+| 645.4794 | 72 | 76000 | 5.069444 |
+
+When set the method `m` to be "TwoMomentApproximation" with 5 replicates for boostrap analysis:
+| negLogLikelihood | meanInterarrival" | VarInterArrival | rep | FOI |
+| :--: | :--: | :--: | :--: | :--: |  
+| 630.3208 | 78 | 82000 | **1** | 4.679487 |
+| 630.3210 | 78 | 81500 | **1** | 4.679487 |
+| 630.3233 | 78 | 82500 | **1** | 4.679487 |
+| 630.3239 | 78 | 81000 | **1** | 4.679487 |
+| 630.3247 | 79 | 83000 | **1** | 4.620253 |
+| 630.3248 | 79 | 82500 | **1** | 4.620253 |
+| 630.3271 | 79 | 83500 | **1** | 4.620253 |
+| 630.3277 | 79 | 82000 | **1** | 4.620253 |
+| 630.3284 | 78 | 83000 | **1** | 4.679487 |
+| 630.3297 | 78 | 80500 | **1** | 4.679487 |
+......
+| 676.8139 | 64 | 64500 | **10** | 5.703125 |
+| 676.8151 | 64 | 65000 | **10** | 5.703125 |
+| 676.8174 | 64 | 64000 | **10** | 5.703125 |
+| 676.8208 | 64 | 65500 | **10** | 5.703125 |
+| 676.8243 | 65 | 65500 | **10** | 5.615385 |
+| 676.8256 | 64 | 63500 | **10** | 5.703125 |
+| 676.8264 | 65 | 66000 | **10** | 5.615385 |
+| 676.8266 | 65 | 65000 | **10** | 5.615385 |
+| 676.8268 | 63 | 64000 | **10** | 5.793651 |
+| 676.8268 | 63 | 63500 | **10** | 5.793651 |
 
 #### Efficiency
-Running bootstrap analysis to derive the confidence intervals of the estimated FOI values can take time. Users should run replicates in parallel. 200 replicates has been tested and proven to approach a similar coefficient of variation than a higher number of replicates. For example, let's assume we run 200 replicates. Users can embed the above command line to a bash script and run it on a computational cluster. One can submit a first job and request a node for the first 10 replicates, a second job and a second node for the second 10 replicates, and so on. By running these 10 jobs in parallel, one reduces the amount of running time.
+Running bootstrap analysis to derive the confidence intervals of the estimated FOI values can take time. Users should divide all replicates into different jobs and run these jobs in parallel. 200 replicates has been tested and proven to approach a similar coefficient of variation than a higher number of replicates [Efron et al., 1994](https://doi.org/10.1201/9780429246593). Thus, let's assume users want to run 200 replicates. They can embed the above command line to bash scripts and run them on a computational cluster. Specifically, users can submit a first job which request a node and some memory allocation for the first 10 replicates, a second job which another node and some memory allocation for the second 10 replicates, and so on. By running these 10 jobs in parallel, users reduce the amount of running time for bootstrap analysis.
+
 ##### file1.sh
 ```bash
 #SBATCH --array=1
