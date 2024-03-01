@@ -38,7 +38,7 @@ T_YEAR = 365
 
 MOIInfo <- read.csv(opt$inputFile, header = T)
 
-source("../utils/funcs.R")
+source("./utils/funcs.R")
 
 if ("Prob" %in% colnames(MOIInfo)) {
   MOIs = rep(MOIInfo$MOI, round(MOIInfo$N*MOIInfo$Prob))
