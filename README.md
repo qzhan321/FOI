@@ -52,6 +52,8 @@ Consider the following toy example. Let's assume we sample 10 individuals in a p
 | 3 | 0.2 | 10 |
 | 4 | 0.1 | 10 |
 
+Note that we assume that the microscopy detection power is 0.8 for illustration purposes. In reality, it can be a much lower value. When users apply the two methods to their own MOI information, they should adopt their understanding and evaluation of the detection power of the method they employ.
+
 #### Command
 ```bash
 Rscript FOIest.R -i "path/to/directory/inputFile" -c 30 -b TRUE -s 1 -e 10 -m "TwoMomentApproximation" -p "high" -o "/path/to/directory/outFile"
