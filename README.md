@@ -4,7 +4,7 @@
 - [Overview](#Overview)
 - [Applying the Two Methods to New Datasets of MOI Information](#Applying-the-Bayesian-Formulation-of-MOI-Estimation-to-New-Datasets)
   - [Running the Script](#Running-the-Script)
-    - [Applicability of The Two Methods](Applicability-of-The-Two-Methods) 
+    - [Applicability of The Two Methods](#Applicability-of-The-Two-Methods) 
     - [The Under-sampling of Infections Issue](#The-Under-sampling-of-Infections-Issue)
     - [Command](#Command)
     - [Example Command](#Example-Command)
