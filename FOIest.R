@@ -70,7 +70,7 @@ runTwoMomentsApproximation <- function(bootstrap = FALSE, reps = NA, MOIs, param
     VarInterArrivals = seq(0,360000,400)
     meanInterarrivals = seq(1,300,1)
   } else if (paramRange == "low") {
-    VarInterArrivals = seq(0,1000000,1000)
+    VarInterArrivals = seq(0,2250000,1500)
     meanInterarrivals = seq(100,700,2)
   } else if (paramRange == "verylow") {
     VarInterArrivals = seq(0,6250000,5000)
