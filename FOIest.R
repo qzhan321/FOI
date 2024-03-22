@@ -23,6 +23,8 @@ option_list <- list(
               help = "which method for FOI estimation [default= %default]; either TwoMomentApproximation or LittlesLaw"),
   make_option(c("-p", "--paramRange"), type = "character", default = "medium",
               help = "transmission intensity of the location [default= %default]; four options, verylow or low or medium or high, corresponding to a high-transmission endemic, a medium-, or a low-transmission setting"),
+  make_option(c("-d", "--durationInformation"), type = "character", default = NULL,
+              help = "the mean and variance of infection duration if both are available; the path to the RData objects"),
   make_option(c("-o", "--output"), type = "character", default = "./FOI.RData",
               help = "the path and the name of the output file [default= %default]")
 )
@@ -32,8 +34,15 @@ print(opt)
 c = opt$bloodStageCarryingCapacity
 r = 0
 
-VarServiceT = 10817.6
-meanServiceT = 208.4681
+if (is.null(opt$durationInformation)) {
+  meanServiceT <- 208.468
+  VarServiceT <- 10817.6
+} else {
+  load(opt$durationInformation)
+  meanServiceT <- meanDuration
+  VarServiceT <- varDuration
+}
+
 T_YEAR = 365
 
 MOIInfo <- read.csv(opt$inputFile, header = T)
