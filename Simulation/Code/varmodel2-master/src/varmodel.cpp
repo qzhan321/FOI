@@ -1230,8 +1230,6 @@ uint64_t get_liver_infection_count(Host * host){
 void infect_host(Host * host, Strain * strain) {
     BEGIN();
     
-    host->population->FOI++;
-    
     Infection * infection = infection_manager.create();
     infection->host = host;
     infection->strain = strain;
@@ -1278,7 +1276,7 @@ void perform_infection_transition(Infection * infection) {
         //then clear the infection. Otherwise, it transition to be an active infection.
         if ((MAX_ACTIVE_MOI-get_active_infection_count(host))>0) {
             infection->expression_index = 0;
-            
+            host->population->FOI++;
             Gene * gene = get_current_gene(infection);
             update_mutation_time(infection, false);
             update_recombination_time(infection, false);
